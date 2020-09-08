@@ -1,14 +1,10 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/aspenjames/aspenjames.dev/api"
+)
 
 func main() {
-	router := gin.Default()
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "[from docker] ping!",
-		})
-	})
-
+	router := api.SetupRouter()
 	router.Run(":4000") // run on port 4000
 }
