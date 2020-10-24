@@ -1,6 +1,7 @@
-import React from "react";
-import { hot } from "react-hot-loader";
-import clsx from "clsx";
+import React, { forwardRef, useMemo } from 'react';
+import { hot } from 'react-hot-loader';
+import { Link as RouterLink } from 'react-router-dom';
+import clsx from 'clsx';
 
 import {
   AppBar,
@@ -16,7 +17,7 @@ import {
   Switch,
   Toolbar,
   Typography,
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import GitHubIcon from '@material-ui/icons/GitHub';
@@ -65,7 +66,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
+  if (props.external) {
+    return <ListItem button component="a" {...props} />;
+  }
+  const renderLink = useMemo(
+    () => forwardRef((itemProps, ref) => <RouterLink to={props.to} ref={ref} {...itemProps} />),
+    [props.to]
+  )
+  return <ListItem button component={renderLink} {...props} />;
 }
 
 function NavBar(props) {
@@ -96,12 +104,12 @@ function NavBar(props) {
     <Divider />
 
     <List>
-      <ListItemLink href="https://github.com/aspenjames/aspenjames.dev">
+      <ListItemLink href="https://github.com/aspenjames/aspenjames.dev" external>
         <ListItemIcon><GitHubIcon /></ListItemIcon>
         <ListItemText primary="GitHub" />
       </ListItemLink>
 
-      <ListItemLink href="http://45.56.84.15/AspenJames/aspenjames.dev">
+      <ListItemLink href="http://45.56.84.15/AspenJames/aspenjames.dev" external>
         <img
           className={classes.buildImage}
           src="http://45.56.84.15/api/badges/AspenJames/aspenjames.dev/status.svg"

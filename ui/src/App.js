@@ -1,17 +1,17 @@
 import React, { useMemo, useState } from "react";
 import { hot } from "react-hot-loader";
+import { BrowserRouter as Router } from 'react-router-dom';
 import clsx from "clsx";
 
 import {
-  Container,
   createMuiTheme,
   CssBaseline,
   makeStyles,
   ThemeProvider,
-  Typography,
 } from "@material-ui/core";
 
 import NavBar from "./components/NavBar";
+import Routes from './Routes';
 
 const drawerWidth = 240;
 
@@ -104,29 +104,22 @@ function App() {
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
         <CssBaseline />
-        <NavBar
-          state={[open, setOpen]}
-          darkModeState={[isDarkMode, setDarkMode]}
-        />
-        <main
-          className={clsx(classes.content, {
-            [classes.contentShift]: open,
-          })}
-        >
-          <div className={classes.drawerHeader} />
-          <Container>
-            <Typography variant="h1" color="primary" align="right">
-              hello!
-            </Typography>
+        <Router>
+          <NavBar
+            state={[open, setOpen]}
+            darkModeState={[isDarkMode, setDarkMode]}
+          />
+          <main
+            className={clsx(classes.content, {
+              [classes.contentShift]: open,
+            })}
+          >
+            <div className={classes.drawerHeader} />
 
-            <Typography variant="h3" component="h2" color="secondary" align="right">
-              my name is aspen.
-            </Typography>
-            <Typography variant="h3" color="textSecondary" align="right">
-              i'm a developer.
-            </Typography>
-          </Container>
-        </main>
+            <Routes />
+
+          </main>
+        </Router>
       </div>
     </ThemeProvider>
   );
