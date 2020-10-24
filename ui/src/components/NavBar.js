@@ -6,10 +6,13 @@ import {
   AppBar,
   Divider,
   Drawer,
+  FormControlLabel,
   IconButton,
   List,
   ListItem,
   ListItemText,
+  makeStyles,
+  Switch,
   Toolbar,
   Typography,
 } from "@material-ui/core";
@@ -22,12 +25,60 @@ function ListItemLink(props) {
   return <ListItem button component="a" {...props} />;
 }
 
+const useStyles = makeStyles(theme => ({
+  appBar: {
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    width: `calc(100% - ${theme.drawerWidth}px)`,
+    marginLeft: theme.drawerWidth,
+    transition: theme.transitions.create(['margin', 'width'], {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  themeButton: {
+    position: 'fixed',
+    top: 0,
+    right: 0,
+    zIndex: 0,
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: theme.drawerWidth,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: theme.drawerWidth,
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
+  },
+}))
+
 function NavBar(props) {
-  const classes = props.styleObj;
+  const classes = useStyles();
   const [open, setOpen] = props.state;
+  const [isDarkMode, setDarkMode] = props.darkModeState;
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
+  const toggleDarkMode = () => setDarkMode(!isDarkMode);
+
+  const handleSwitchInput = (ev) => toggleDarkMode(ev.target.checked);
 
   const drawerContents = (
     <>
@@ -37,11 +88,24 @@ function NavBar(props) {
       </IconButton>
     </div>
     <Divider />
+
     <List>
       <ListItemLink href="/">
         <ListItemText primary="Home" />
       </ListItemLink>
     </List>
+    <Divider />
+
+    <FormControlLabel
+      control={
+        <Switch
+          checked={isDarkMode}
+          color='secondary'
+          onChange={handleSwitchInput}
+        />
+      }
+      label="Dark mode"
+    />
     </>
   );
 
