@@ -10,6 +10,7 @@ import {
   IconButton,
   List,
   ListItem,
+  ListItemIcon,
   ListItemText,
   makeStyles,
   Switch,
@@ -18,12 +19,9 @@ import {
 } from "@material-ui/core";
 
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import MenuIcon from '@material-ui/icons/Menu';
 
-
-function ListItemLink(props) {
-  return <ListItem button component="a" {...props} />;
-}
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -40,14 +38,11 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  buildImage: {
+    // margin: 'auto',
+  },
   menuButton: {
     marginRight: theme.spacing(2),
-  },
-  themeButton: {
-    position: 'fixed',
-    top: 0,
-    right: 0,
-    zIndex: 0,
   },
   hide: {
     display: 'none',
@@ -68,6 +63,10 @@ const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-end',
   },
 }))
+
+function ListItemLink(props) {
+  return <ListItem button component="a" {...props} />;
+}
 
 function NavBar(props) {
   const classes = useStyles();
@@ -92,6 +91,21 @@ function NavBar(props) {
     <List>
       <ListItemLink href="/">
         <ListItemText primary="Home" />
+      </ListItemLink>
+    </List>
+    <Divider />
+
+    <List>
+      <ListItemLink href="https://github.com/aspenjames/aspenjames.dev">
+        <ListItemIcon><GitHubIcon /></ListItemIcon>
+        <ListItemText primary="GitHub" />
+      </ListItemLink>
+
+      <ListItemLink href="http://45.56.84.15/AspenJames/aspenjames.dev">
+        <img
+          className={classes.buildImage}
+          src="http://45.56.84.15/api/badges/AspenJames/aspenjames.dev/status.svg"
+        />
       </ListItemLink>
     </List>
     <Divider />
