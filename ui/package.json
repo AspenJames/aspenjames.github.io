@@ -27,6 +27,7 @@
     "react-router-dom": "^5.2.0"
   },
   "scripts": {
-    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development"
+    "dev": "./node_modules/webpack-dev-server/bin/webpack-dev-server.js --mode development",
+    "build": "webpack --mode production"
   }
 }
