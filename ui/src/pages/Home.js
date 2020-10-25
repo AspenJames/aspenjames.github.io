@@ -1,25 +1,23 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
 
-import {
-  Container,
-  Typography
-} from '@material-ui/core';
+import ContainerRight from '../components/ContainerRight';
+import LowerTextRight from '../components/LowerTextRight';
 
 function Home() {
   return (
-    <Container>
-      <Typography variant="h1" color="primary" align="right">
+    <ContainerRight maxWidth='sm'>
+      <LowerTextRight variant="h1" color="primary">
         hello!
-      </Typography>
+      </LowerTextRight>
 
-      <Typography variant="h3" component="h2" color="secondary" align="right">
+      <LowerTextRight variant="h3" component="h2" color="secondary">
         my name is aspen.
-      </Typography>
-      <Typography variant="h3" color="textSecondary" align="right">
+      </LowerTextRight>
+      <LowerTextRight variant="h3" color="textSecondary">
         i'm a developer.
-      </Typography>
-    </Container>
+      </LowerTextRight>
+    </ContainerRight>
   );
 }
 
