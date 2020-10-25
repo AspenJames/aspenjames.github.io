@@ -1,6 +1,6 @@
 import React, { forwardRef, useMemo } from 'react';
 import { hot } from 'react-hot-loader';
-import { Link as RouterLink } from 'react-router-dom';
+import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 
 import {
@@ -39,9 +39,6 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  buildImage: {
-    // margin: 'auto',
-  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -65,16 +62,6 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-function ListItemLink(props) {
-  if (props.external) {
-    return <ListItem button component="a" {...props} />;
-  }
-  const renderLink = useMemo(
-    () => forwardRef((itemProps, ref) => <RouterLink to={props.to} ref={ref} {...itemProps} />),
-    [props.to]
-  )
-  return <ListItem button component={renderLink} {...props} />;
-}
 
 function NavBar(props) {
   const classes = useStyles();
@@ -87,6 +74,24 @@ function NavBar(props) {
 
   const handleSwitchInput = (ev) => toggleDarkMode(ev.target.checked);
 
+  const ListItemLink = ({ icon, primary, to, external }) => {
+    const renderLink = useMemo(
+      () => forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
+      [to],
+    );
+
+    const component = external ? 'a' : renderLink;
+
+    return (
+      <li>
+        <ListItem button component={component} onClick={handleDrawerClose}>
+          {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+          {primary ? <ListItemText primary={primary} /> : null}
+        </ListItem>
+      </li>
+    )
+  }
+
   const drawerContents = (
     <>
     <div className={classes.drawerHeader}>
@@ -97,24 +102,16 @@ function NavBar(props) {
     <Divider />
 
     <List>
-      <ListItemLink href="/">
-        <ListItemText primary="Home" />
-      </ListItemLink>
+      <ListItemLink to="/" primary="Home" />
+      <ListItemLink to="/about" primary="About" />
     </List>
     <Divider />
 
     <List>
-      <ListItemLink href="https://github.com/aspenjames/aspenjames.dev" external>
-        <ListItemIcon><GitHubIcon /></ListItemIcon>
-        <ListItemText primary="GitHub" />
-      </ListItemLink>
-
-      <ListItemLink href="http://45.56.84.15/AspenJames/aspenjames.dev" external>
-        <img
-          className={classes.buildImage}
-          src="http://45.56.84.15/api/badges/AspenJames/aspenjames.dev/status.svg"
-        />
-      </ListItemLink>
+      <ListItemLink to="https://github.com/aspenjames/aspenjames.dev" icon={<GitHubIcon />} primary="Github" external="true" />
+      <ListItemLink to="http://45.56.84.15/AspenJames/aspenjames.dev" icon={
+        <img src="http://45.56.84.15/api/badges/AspenJames/aspenjames.dev/status.svg" />
+      } external="true" />
     </List>
     <Divider />
 
