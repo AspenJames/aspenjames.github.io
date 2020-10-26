@@ -22,8 +22,6 @@ RUN yarn install
 COPY ui/webpack.config.js .
 COPY ui/src ./src
 
-RUN ls /app
-
 RUN yarn build
 
 FROM alpine:latest AS runner
