@@ -11,7 +11,10 @@ func SetupRouter() *gin.Engine {
 }
 
 func routes(r *gin.Engine) {
-	r.GET("/ping", PingGet)
+	v1 := r.Group("/api/v1")
+	{
+		v1.GET("/ping", PingGet)
+	}
 }
 
 // PingGet defines a GET '/ping', returning 200 JSON
