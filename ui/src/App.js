@@ -8,6 +8,7 @@ import {
   CssBaseline,
   makeStyles,
   ThemeProvider,
+  useMediaQuery,
 } from "@material-ui/core";
 
 import NavBar from "./components/NavBar";
@@ -46,7 +47,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function App() {
-  const [isDarkMode, setDarkMode] = useState(true);
+  let darkModeInitial = localStorage.getItem('darkMode');
+  if (darkModeInitial === null) {
+    darkModeInitial = useMediaQuery('(prefers-color-scheme: dark)');
+    localStorage.setItem('darkMode', darkModeInitial)
+  } else {
+    darkModeInitial = darkModeInitial !== 'false';
+  }
+  const [isDarkMode, setDarkMode] = useState(darkModeInitial);
   const darkThemeColors = {
     primary: {
       light: '#72FFFF',

@@ -70,7 +70,10 @@ function NavBar(props) {
 
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
-  const toggleDarkMode = () => setDarkMode(!isDarkMode);
+  const toggleDarkMode = () => {
+    localStorage.setItem('darkMode', !isDarkMode);
+    setDarkMode(!isDarkMode);
+  }
 
   const handleSwitchInput = (ev) => toggleDarkMode(ev.target.checked);
 
