@@ -12,7 +12,7 @@ import (
 func TestPingGet(t *testing.T) {
 	router := SetupRouter()
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("GET", "/ping", nil)
+	req, _ := http.NewRequest("GET", "/api/v1/ping", nil)
 	router.ServeHTTP(w, req)
 
 	type pingReturn struct {
