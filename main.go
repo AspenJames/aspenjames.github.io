@@ -1,8 +1,9 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/aspenjames/aspenjames.dev/api"
-	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
@@ -11,8 +12,8 @@ func main() {
 	router := api.SetupRouter()
 
 	// Serve frontend files
-	router.Use(static.Serve("/", static.LocalFile("./ui/public", false)))
-	router.Use(static.Serve("/dist", static.LocalFile("./ui/dist", false)))
+	router.StaticFile("/", "./ui/public/index.html")
+	router.StaticFS("/dist", http.Dir("./ui/dist"))
 
 	// Override NoRoute to serve ./ui/public/index.html,
 	// pass rest of route path to ReactRouter
