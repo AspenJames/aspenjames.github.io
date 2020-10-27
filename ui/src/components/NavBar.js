@@ -84,10 +84,11 @@ function NavBar(props) {
     );
 
     const component = external ? 'a' : renderLink;
+    const href = external ? {'href': to} : {};
 
     return (
       <li>
-        <ListItem button component={component} onClick={handleDrawerClose}>
+        <ListItem button component={component} onClick={handleDrawerClose} {...href}>
           {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
           {primary ? <ListItemText primary={primary} /> : null}
         </ListItem>
