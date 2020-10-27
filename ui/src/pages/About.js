@@ -1,4 +1,4 @@
-import { makeStyles, Typography } from '@material-ui/core';
+import { Link, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
 import { hot } from 'react-hot-loader';
 
@@ -7,18 +7,18 @@ import TextRight from '../components/TextRight';
 
 function About() {
   return (
-    <ContainerRight maxWidth='md'>
+    <ContainerRight maxWidth='sm'>
       <TextRight variant='h2' color='primary'>
         Nice to meet you!
       </TextRight>
       <TextRight variant='h5' component='p' color='textPrimary'>
-        As a full stack engineer, I build web-based software products with a
-        focus on the end user. I am especially interested in the scalability
-        and maintainability of the software itself, ensuring the ability to
-        iterate and respond quickly to changing requirements and demand. I
-        value knowledge sharing, collaboration, and documentation as ways to
-        grow individually as well as a team. I enjoy automation and developer
-        tooling, simplifying repeated tasks and workflows.
+        I'm a full stack engineer; I build web-based software products with a
+        focus on developer tooling and automation. I am a trans/non-binary queer
+        person, and I use they/them pronouns. I live and work on the <Link
+        href="https://www.duwamishtribe.org/history">unceded territory of the
+        Dx&#695;d&#601;w&#660;ab&scaron;</Link>, and it's important to me that I
+        acknowledge this and <Link href="https://www.realrentduwamish.org/">pay
+        rent</Link> to the original people of this land.
       </TextRight>
     </ContainerRight>
   );
