@@ -1,4 +1,4 @@
-import { Link, makeStyles, Typography } from '@material-ui/core';
+import { Link, useMediaQuery } from '@material-ui/core';
 import React from 'react';
 import { hot } from 'react-hot-loader';
 
@@ -6,8 +6,10 @@ import ContainerRight from '../components/ContainerRight';
 import TextRight from '../components/TextRight';
 
 function About() {
+  const isMobile = useMediaQuery(theme => theme.breakpoints.down('sm'));
+  const containerWidth = isMobile ? 'sm' : 'md';
   return (
-    <ContainerRight maxWidth='sm'>
+    <ContainerRight maxWidth={containerWidth}>
       <TextRight variant='h2' color='primary'>
         Nice to meet you!
       </TextRight>
