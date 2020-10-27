@@ -11,11 +11,41 @@ feedback welcome in the form of [issue reports][issue].
 
 ## Running Locally
 
-TODO
+### Using docker-compose
+```bash
+docker-compose up --build
+```
+
+### Run each service individually
+
+- Install frontend dependencies
+```bash
+cd ui/
+yarn install
+```
+
+- Run frontend development server
+```bash
+yarn run dev
+```
+
+- Run Go web/api development server
+```bash
+go run ./main.go
+```
 
 ## Building for Production
 
-TODO
+- Build frontend files for production
+```bash
+cd ui/
+yarn run build
+```
+
+- Build Go web/api server
+```bash
+go build ./main.go
+```
 
 ## Deplopying
 
