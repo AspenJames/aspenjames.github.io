@@ -48,8 +48,9 @@ const useStyles = makeStyles(theme => ({
 
 function App() {
   let darkModeInitial = localStorage.getItem('darkMode');
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
   if (darkModeInitial === null) {
-    darkModeInitial = useMediaQuery('(prefers-color-scheme: dark)');
+    darkModeInitial = prefersDarkMode;
     localStorage.setItem('darkMode', darkModeInitial)
   } else {
     darkModeInitial = darkModeInitial !== 'false';
