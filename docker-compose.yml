@@ -3,4 +3,13 @@ services:
   web:
     build: .
     ports:
-    - "4000:4000"
+    - "4000"
+
+  nginx:
+    image: "nginx:alpine"
+    volumes:
+    - "./nginx:/etc/nginx/conf.d"
+    ports:
+    - "8090:80"
+    depends_on:
+    - "web"
