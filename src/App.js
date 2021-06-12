@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from "react";
-import { hot } from "react-hot-loader";
 import { BrowserRouter as Router } from 'react-router-dom';
 import clsx from "clsx";
 
@@ -56,37 +55,36 @@ function App() {
     darkModeInitial = darkModeInitial !== 'false';
   }
   const [isDarkMode, setDarkMode] = useState(darkModeInitial);
-  const darkThemeColors = {
-    primary: {
-      light: '#72FFFF',
-      main: '#00FFFF',
-      dark: '#00CBCC',
-      contrastText: '#000000',
-    },
-    secondary: {
-      light: '#FFD7FF',
-      main: '#FFA4FF',
-      dark: '#CB73CC',
-      contrastText: '#000000',
-    },
-  }
-  const lightThemeColors = {
-    primary: {
-      light: '#64FFFF',
-      main: '#00CCCC',
-      dark: '#009A9B',
-      contrastText: '#000000',
-    },
-    secondary: {
-      light: '#FFC1E3',
-      main: '#F48FB1',
-      dark: '#BF5F82',
-      contrastText: '#FFFFFF',
-    },
-  }
-
   const theme = useMemo(
     () => {
+      const darkThemeColors = {
+        primary: {
+          light: '#72FFFF',
+          main: '#00FFFF',
+          dark: '#00CBCC',
+          contrastText: '#000000',
+        },
+        secondary: {
+          light: '#FFD7FF',
+          main: '#FFA4FF',
+          dark: '#CB73CC',
+          contrastText: '#000000',
+        },
+      }
+      const lightThemeColors = {
+        primary: {
+          light: '#64FFFF',
+          main: '#00CCCC',
+          dark: '#009A9B',
+          contrastText: '#000000',
+        },
+        secondary: {
+          light: '#FFC1E3',
+          main: '#F48FB1',
+          dark: '#BF5F82',
+          contrastText: '#FFFFFF',
+        },
+      }
       if (isDarkMode) {
         return createMuiTheme({
           palette: {
@@ -134,4 +132,4 @@ function App() {
   );
 }
 
-export default hot(module)(App);
+export default App;

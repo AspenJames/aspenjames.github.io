@@ -1,5 +1,4 @@
 import React from 'react';
-import { hot } from 'react-hot-loader';
 
 import ContainerRight from '../components/ContainerRight';
 import TextRight from '../components/TextRight';
@@ -21,4 +20,4 @@ function Home() {
   );
 }
 
-export default hot(module)(Home);
+export default Home;

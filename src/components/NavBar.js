@@ -1,5 +1,4 @@
 import React, { forwardRef, useMemo } from 'react';
-import { hot } from 'react-hot-loader';
 import { NavLink as RouterLink } from 'react-router-dom';
 import clsx from 'clsx';
 
@@ -113,9 +112,6 @@ function NavBar(props) {
 
     <List>
       <ListItemLink to="https://github.com/aspenjames/aspenjames.dev" icon={<GitHubIcon />} primary="Github" external="true" />
-      <ListItemLink to="http://45.56.84.15/AspenJames/aspenjames.dev" icon={
-        <img src="http://45.56.84.15/api/badges/AspenJames/aspenjames.dev/status.svg" />
-      } external="true" />
     </List>
     <Divider />
 
@@ -168,4 +164,4 @@ function NavBar(props) {
   )
 }
 
-export default hot(module)(NavBar);
+export default NavBar;

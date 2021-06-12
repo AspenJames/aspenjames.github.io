@@ -1,6 +1,5 @@
 import { Link, useMediaQuery } from '@material-ui/core';
 import React from 'react';
-import { hot } from 'react-hot-loader';
 
 import ContainerRight from '../components/ContainerRight';
 import TextRight from '../components/TextRight';
@@ -26,4 +25,4 @@ function About() {
   );
 }
 
-export default hot(module)(About);
+export default About;
