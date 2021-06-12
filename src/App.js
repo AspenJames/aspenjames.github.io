@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import clsx from "clsx";
 
 import {
