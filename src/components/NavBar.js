@@ -83,7 +83,7 @@ function NavBar(props) {
     );
 
     const component = external ? 'a' : renderLink;
-    const href = external ? {'href': to} : {};
+    const href = external ? { 'href': to } : {};
 
     return (
       <li>
@@ -97,69 +97,69 @@ function NavBar(props) {
 
   const drawerContents = (
     <>
-    <div className={classes.drawerHeader}>
-      <IconButton onClick={handleDrawerClose}>
-        <ChevronLeftIcon />
-      </IconButton>
-    </div>
-    <Divider />
+      <div className={classes.drawerHeader}>
+        <IconButton onClick={handleDrawerClose}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </div>
+      <Divider />
 
-    <List>
-      <ListItemLink to="/" primary="Home" />
-      <ListItemLink to="/about" primary="About" />
-    </List>
-    <Divider />
+      <List>
+        <ListItemLink to="/" primary="Home" />
+        <ListItemLink to="/about" primary="About" />
+      </List>
+      <Divider />
 
-    <List>
-      <ListItemLink to="https://github.com/aspenjames/aspenjames.dev" icon={<GitHubIcon />} primary="Github" external="true" />
-    </List>
-    <Divider />
+      <List>
+        <ListItemLink to="https://github.com/aspenjames/aspenjames.github.io" icon={<GitHubIcon />} primary="Github" external="true" />
+      </List>
+      <Divider />
 
-    <FormControlLabel
-      control={
-        <Switch
-          checked={isDarkMode}
-          color='secondary'
-          onChange={handleSwitchInput}
-        />
-      }
-      label="Dark mode"
-    />
+      <FormControlLabel
+        control={
+          <Switch
+            checked={isDarkMode}
+            color='secondary'
+            onChange={handleSwitchInput}
+          />
+        }
+        label="Dark mode"
+      />
     </>
   );
 
   return (
     <>
-    <AppBar
-      position="fixed"
-      className={clsx(classes.appBar, {
-        [classes.appBarShift]: open,
-      })}
-    >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          className={clsx(classes.menuButton, open && classes.hide)}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography variant="h6" noWrap>
-          aspenjames.dev
-        </Typography>
-      </Toolbar>
-    </AppBar>
-    <Drawer
-      className={classes.drawer}
-      variant="persistent"
-      anchor="left"
-      open={open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >{drawerContents}</Drawer>
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" noWrap>
+            aspenjames.dev
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >{drawerContents}</Drawer>
     </>
   )
 }
