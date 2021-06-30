@@ -5,7 +5,6 @@ function Particles() {
     const go = new window.Go();
     window.WebAssembly.instantiateStreaming(
       fetch("wasm/particle.wasm", {
-        // method: "GET",
         headers: { Accept: "application/wasm" },
       }),
       go.importObject
