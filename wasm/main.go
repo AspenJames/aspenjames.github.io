@@ -49,10 +49,64 @@ func (p *particle) draw() {
 	ctx.Call("fill")
 }
 
+func (p *particle) update() {
+	canvW := canvas.Get("width").Float()
+	canvH := canvas.Get("height").Float()
+	// Reverse direction if particle has hit a window border.
+	if (p.x+p.size) > canvW || (p.x-p.size) < 0 {
+		p.directionX = -p.directionX
+	}
+	if (p.y+p.size) > canvH || (p.y-p.size) < 0 {
+		p.directionY = -p.directionY
+	}
+	// Check distance from particle to mouse radius.
+	dx := mouse.x - p.x
+	dy := mouse.y - p.y
+	dist := math.Sqrt(dx*dx + dy*dy)
+	if dist < mouse.radius+p.size {
+		// Particle is right of mouse.
+		if mouse.x < p.x && p.x < canvW-p.size*10 {
+			p.x += 10
+			// Reverse direction if approaching from right.
+			if p.directionX < 0 {
+				p.directionX = -p.directionX
+			}
+		}
+		// Particle is left of mouse.
+		if mouse.x > p.x && p.x > p.size*10 {
+			p.x -= 10
+			// Reverse direction if approaching from left.
+			if p.directionX > 0 {
+				p.directionX = -p.directionX
+			}
+		}
+		// Particle is above mouse.
+		if mouse.y > p.y && p.y > p.size*10 {
+			p.y -= 10
+			// Reverse if approaching from top.
+			if p.directionY > 0 {
+				p.directionY = -p.directionY
+			}
+		}
+		// Particle is below mouse.
+		if mouse.y < p.y && p.y < canvH-p.size*10 {
+			p.y += 10
+			// Reverse if approaching from bottom.
+			if p.directionY < 0 {
+				p.directionY = -p.directionY
+			}
+		}
+	}
+	// Update particle position & draw.
+	p.x += p.directionX
+	p.y += p.directionY
+	p.draw()
+}
+
 func newRandomParticle() *particle {
 	size := rand.Float64()*5 + 1
-	canvW := float64(canvas.Get("width").Int())
-	canvH := float64(canvas.Get("height").Int())
+	canvW := canvas.Get("width").Float()
+	canvH := canvas.Get("height").Float()
 	colorIdx := rand.Intn(len(colors))
 
 	return &particle{
@@ -94,7 +148,7 @@ func animate() {
 			canvH := canvas.Get("height").Int()
 			ctx.Call("clearRect", 0, 0, canvW, canvH)
 			for _, p := range particles {
-				p.draw()
+				p.update()
 			}
 		}
 		js.Global().Call("requestAnimationFrame", renderFrame)
@@ -109,8 +163,8 @@ func bindEventListeners() {
 	// Set mouse position on mousemove.
 	mouseCb := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		ev := args[0]
-		mouse.x = float64(ev.Get("x").Int())
-		mouse.y = float64(ev.Get("y").Int())
+		mouse.x = ev.Get("x").Float()
+		mouse.y = ev.Get("y").Float()
 		return nil
 	})
 	js.Global().Call("addEventListener", "mousemove", mouseCb)
