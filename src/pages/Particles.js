@@ -1,4 +1,15 @@
 import { useEffect } from "react";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((_) => ({
+  canvas: {
+    margin: 0,
+    padding: 0,
+    position: "absolute",
+    top: 0,
+    left: 0,
+  },
+}));
 
 function Particles() {
   useEffect(() => {
@@ -12,7 +23,8 @@ function Particles() {
       go.run(result.instance);
     });
   }, []);
-  return <canvas id="canvas"></canvas>;
+  const classes = useStyles();
+  return <canvas id="canvas" className={classes.canvas}></canvas>;
 }
 
 export default Particles;
