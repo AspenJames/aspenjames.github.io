@@ -82,6 +82,29 @@ func init() {
 	bindEventListeners()
 }
 
+// Animate sets up the main animation loop.
+func animate() {
+	var lastTimestamp float64
+	var timeStep float64 = float64(1000) / 60
+	var renderFrame js.Func
+	renderFrame = js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		timestamp := args[0].Float()
+		if timestamp-lastTimestamp >= timeStep {
+			canvW := canvas.Get("width").Int()
+			canvH := canvas.Get("height").Int()
+			ctx.Call("clearRect", 0, 0, canvW, canvH)
+			for _, p := range particles {
+				p.draw()
+			}
+		}
+		js.Global().Call("requestAnimationFrame", renderFrame)
+		return nil
+	})
+	defer renderFrame.Release()
+	go js.Global().Call("requestAnimationFrame", renderFrame)
+	<-done
+}
+
 func bindEventListeners() {
 	// Set mouse position on mousemove.
 	mouseCb := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
@@ -115,9 +138,5 @@ func fitCanvasAndInitParticles() {
 }
 
 func main() {
-	// Draw each particle.
-	for _, p := range particles {
-		p.draw()
-	}
-	<-done
+	animate()
 }
