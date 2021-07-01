@@ -24,6 +24,7 @@ type color struct {
 }
 
 type cursor struct {
+	active bool
 	x      float64
 	y      float64
 	radius float64
@@ -63,7 +64,7 @@ func (p *particle) update() {
 	dx := mouse.x - p.x
 	dy := mouse.y - p.y
 	dist := math.Sqrt(dx*dx + dy*dy)
-	if dist < mouse.radius+p.size {
+	if mouse.active && dist < mouse.radius+p.size {
 		// Particle is right of mouse.
 		if mouse.x < p.x && p.x < canvW-p.size*10 {
 			p.x += 10
@@ -163,11 +164,18 @@ func bindEventListeners() {
 	// Set mouse position on mousemove.
 	mouseCb := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		ev := args[0]
+		mouse.active = true
 		mouse.x = ev.Get("x").Float()
 		mouse.y = ev.Get("y").Float()
 		return nil
 	})
 	js.Global().Call("addEventListener", "mousemove", mouseCb)
+	// Remove mouse 'obstacle' on mouseout.
+	mouseoutCb := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
+		mouse.active = false
+		return nil
+	})
+	js.Global().Call("addEventListener", "mouseout", mouseoutCb)
 	// Re-init on window resize.
 	resizeCb := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		fitCanvasAndInitParticles()
