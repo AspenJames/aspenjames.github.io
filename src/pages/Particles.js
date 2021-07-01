@@ -14,6 +14,13 @@ const useStyles = makeStyles((_) => ({
 function Particles() {
   useEffect(() => {
     const go = new window.Go();
+    // polyfill
+    if (!window.WebAssembly.instantiateStreaming) {
+      window.WebAssembly.instantiateStreaming = async (resp, importObject) => {
+        const source = await (await resp).arrayBuffer();
+        return await window.WebAssembly.instantiate(source, importObject);
+      };
+    }
     window.WebAssembly.instantiateStreaming(
       fetch("wasm/particle.wasm", {
         headers: { Accept: "application/wasm" },
