@@ -11,7 +11,8 @@ var (
 	canvas    js.Value
 	ctx       js.Value
 	document  js.Value
-	colors    []color
+	colors    []*color
+	gray      *color
 	mouse     cursor
 	particles []*particle
 	done      chan bool
@@ -21,6 +22,10 @@ type color struct {
 	r int
 	g int
 	b int
+}
+
+func (c *color) rgba(opacity float64) string {
+	return fmt.Sprintf("rgba(%d, %d, %d, %f)", c.r, c.g, c.b, opacity)
 }
 
 type cursor struct {
@@ -36,17 +41,13 @@ type particle struct {
 	directionX float64
 	directionY float64
 	size       float64
-	c          color
-}
-
-func (p *particle) colorStr() string {
-	return fmt.Sprintf("rgba(%d, %d, %d, 1)", p.c.r, p.c.g, p.c.b)
+	c          *color
 }
 
 func (p *particle) draw() {
 	ctx.Call("beginPath")
 	ctx.Call("arc", p.x, p.y, p.size, 0, math.Pi*2)
-	ctx.Set("fillStyle", p.colorStr())
+	ctx.Set("fillStyle", p.c.rgba(1))
 	ctx.Call("fill")
 }
 
@@ -131,7 +132,8 @@ func init() {
 	// Add particle colors.
 	pink := &color{r: 244, g: 143, b: 177}
 	blue := &color{r: 0, g: 204, b: 204}
-	colors = append(colors, *pink, *blue)
+	gray = &color{r: 20, g: 20, b: 20}
+	colors = append(colors, pink, blue)
 	// Fit canvas to window size, populate particles.
 	fitCanvasAndInitParticles()
 	bindEventListeners()
@@ -153,11 +155,46 @@ func animate() {
 			}
 		}
 		js.Global().Call("requestAnimationFrame", renderFrame)
+		connect()
 		return nil
 	})
 	defer renderFrame.Release()
-	go js.Global().Call("requestAnimationFrame", renderFrame)
+	js.Global().Call("requestAnimationFrame", renderFrame)
 	<-done
+}
+
+// Draw connections between particles based on distance between particles.
+func connect() {
+	canvW := canvas.Get("width").Float()
+	canvH := canvas.Get("height").Float()
+	// For each particle, loop through all other particles.
+	for a := 0; a < len(particles); a++ {
+		for b := a; b < len(particles); b++ {
+			partA := particles[a]
+			partB := particles[b]
+			dx := partA.x - partB.x
+			dy := partA.y - partB.y
+			dist := (dx*dx + dy*dy)
+			// Connect if within distance threshhold.
+			if dist < (canvW / 14 * canvH / 14) {
+				var lineColor string
+				// Decrease opacity as particles separate.
+				opacity := 1 - dist/10000
+				// Use particle color if colors match, else gray.
+				if partA.c == partB.c {
+					lineColor = partA.c.rgba(opacity)
+				} else {
+					lineColor = gray.rgba(opacity)
+				}
+				ctx.Set("strokeStyle", lineColor)
+				ctx.Set("lineWidth", 1)
+				ctx.Call("beginPath")
+				ctx.Call("moveTo", partA.x, partA.y)
+				ctx.Call("lineTo", partB.x, partB.y)
+				ctx.Call("stroke")
+			}
+		}
+	}
 }
 
 func bindEventListeners() {
