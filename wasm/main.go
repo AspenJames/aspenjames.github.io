@@ -168,8 +168,8 @@ func connect() {
 	canvW := canvas.Get("width").Float()
 	canvH := canvas.Get("height").Float()
 	// For each particle, loop through all other particles.
-	for a := 0; a < len(particles); a++ {
-		for b := a; b < len(particles); b++ {
+	for a := 0; a < len(particles)-1; a++ {
+		for b := a + 1; b < len(particles); b++ {
 			partA := particles[a]
 			partB := particles[b]
 			dx := partA.x - partB.x
