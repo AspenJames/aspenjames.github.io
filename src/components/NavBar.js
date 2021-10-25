@@ -112,7 +112,7 @@ function NavBar(props) {
       <Divider />
 
       <List>
-        <ListItemLink to="https://github.com/aspenjames/aspenjames.github.io/tree/wasm" icon={<GitHubIcon />} primary="Github" external="true" />
+        <ListItemLink to="https://github.com/aspenjames/aspenjames.github.io" icon={<GitHubIcon />} primary="Github" external="true" />
       </List>
       <Divider />
 
