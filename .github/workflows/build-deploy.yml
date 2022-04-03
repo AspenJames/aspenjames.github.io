@@ -1,0 +1,54 @@
+name: 🛠Build & 🚀Deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: 🛠Build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup yarn
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+        cache: 'yarn'
+
+    - name: Install dependencies
+      run: yarn install --prod --silent
+
+    - name: Build
+      run: yarn build
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact/@v3
+      with:
+        name: production-build
+        path: ./build
+
+  deploy:
+    name: 🚀Deploy
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Download build artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: production-build
+        path: ./build
+
+    - name: Deploy to GitHub Pages
+      uses: JamesIves/github-pages-deploy-action@v4.2.5
+      with:
+        branch: deploy
+        folder: build
