@@ -34,6 +34,10 @@ function About() {
         </Link>{" "}
         I made with Go to experiment with and learn a bit about WebAssembly! If
         you're using a mouse, you can push the particles around with your mouse!
+        For more info on the work I do, check out my{" "}
+        <Link component={NavLink} to="/resume">
+          resume
+        </Link>.
       </TextRight>
     </ContainerRight>
   );
