@@ -107,6 +107,7 @@ function NavBar(props) {
       <List>
         <ListItemLink to="/" primary="Home" />
         <ListItemLink to="/about" primary="About" />
+        <ListItemLink to="/resume" primary="Resume" />
         <ListItemLink to="/particles" primary="Particles" />
       </List>
       <Divider />
