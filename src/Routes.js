@@ -1,6 +1,5 @@
 import React from "react";
-
-import { Switch, Route } from "react-router-dom";
+import { Routes as ReactRoutes, Route } from "react-router-dom";
 
 import About from "./pages/About";
 import Home from "./pages/Home";
@@ -9,20 +8,12 @@ import Resume from "./pages/Resume";
 
 function Routes() {
   return (
-    <Switch>
-      <Route path="/about">
-        <About />
-      </Route>
-      <Route path="/particles">
-        <Particles />
-      </Route>
-      <Route path="/resume">
-        <Resume />
-      </Route>
-      <Route path="/">
-        <Home />
-      </Route>
-    </Switch>
+    <ReactRoutes>
+      <Route path="/about" element={<About />} />
+      <Route path="/particles" element={<Particles />} />
+      <Route path="/resume" element={<Resume />} />
+      <Route path="/" element={<Home />} />
+    </ReactRoutes>
   );
 }
 
