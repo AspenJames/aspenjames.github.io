@@ -4,8 +4,11 @@
   "private": true,
   "homepage": "https://aspenjames.github.io",
   "dependencies": {
+    "@craco/craco": "^6.4.3",
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@mdx-js/loader": "^2.1.1",
+    "@mdx-js/react": "^2.1.1",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^14.2.0",
@@ -15,14 +18,16 @@
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
+    "remark-frontmatter": "^4.0.1",
+    "remark-mdx-frontmatter": "^1.1.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "craco start",
+    "build": "craco build",
     "deploy": "gh-pages -b deploy -d build",
     "predeploy": "yarn build",
-    "test": "react-scripts test",
+    "test": "craco test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -12,6 +12,7 @@ import {
 
 import NavBar from "./components/NavBar";
 import Routes from "./Routes";
+import { MDXProvider } from "@mdx-js/react";
 
 const drawerWidth = 240;
 
@@ -106,26 +107,28 @@ function App() {
   const [open, setOpen] = useState(false);
 
   return (
-    <ThemeProvider theme={theme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <Router>
-          <NavBar
-            state={[open, setOpen]}
-            darkModeState={[isDarkMode, setDarkMode]}
-          />
-          <main
-            className={clsx(classes.content, {
-              [classes.contentShift]: open,
-            })}
-          >
-            <div className={classes.drawerHeader} />
+    <MDXProvider>
+      <ThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <Router>
+            <NavBar
+              state={[open, setOpen]}
+              darkModeState={[isDarkMode, setDarkMode]}
+            />
+            <main
+              className={clsx(classes.content, {
+                [classes.contentShift]: open,
+              })}
+            >
+              <div className={classes.drawerHeader} />
 
-            <Routes />
-          </main>
-        </Router>
-      </div>
-    </ThemeProvider>
+              <Routes />
+            </main>
+          </Router>
+        </div>
+      </ThemeProvider>
+    </MDXProvider>
   );
 }
 
