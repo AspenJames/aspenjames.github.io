@@ -1,6 +1,6 @@
-import React, { forwardRef, useMemo } from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
-import clsx from 'clsx';
+import React, { forwardRef, useMemo } from "react";
+import { NavLink as RouterLink } from "react-router-dom";
+import clsx from "clsx";
 
 import {
   AppBar,
@@ -16,16 +16,15 @@ import {
   Switch,
   Toolbar,
   Typography,
-} from '@material-ui/core';
+} from "@material-ui/core";
 
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import MenuIcon from "@material-ui/icons/Menu";
 
-
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   appBar: {
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -33,7 +32,7 @@ const useStyles = makeStyles(theme => ({
   appBarShift: {
     width: `calc(100% - ${theme.drawerWidth}px)`,
     marginLeft: theme.drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -42,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   hide: {
-    display: 'none',
+    display: "none",
   },
   drawer: {
     width: theme.drawerWidth,
@@ -52,15 +51,14 @@ const useStyles = makeStyles(theme => ({
     width: theme.drawerWidth,
   },
   drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     padding: theme.spacing(0, 1),
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
-}))
-
+}));
 
 function NavBar(props) {
   const classes = useStyles();
@@ -70,30 +68,38 @@ function NavBar(props) {
   const handleDrawerOpen = () => setOpen(true);
   const handleDrawerClose = () => setOpen(false);
   const toggleDarkMode = () => {
-    localStorage.setItem('darkMode', !isDarkMode);
+    localStorage.setItem("darkMode", !isDarkMode);
     setDarkMode(!isDarkMode);
-  }
+  };
 
   const handleSwitchInput = (ev) => toggleDarkMode(ev.target.checked);
 
   const ListItemLink = ({ icon, primary, to, external }) => {
     const renderLink = useMemo(
-      () => forwardRef((itemProps, ref) => <RouterLink to={to} ref={ref} {...itemProps} />),
-      [to],
+      () =>
+        forwardRef((itemProps, ref) => (
+          <RouterLink to={to} ref={ref} {...itemProps} />
+        )),
+      [to]
     );
 
-    const component = external ? 'a' : renderLink;
-    const href = external ? { 'href': to } : {};
+    const component = external ? "a" : renderLink;
+    const href = external ? { href: to } : {};
 
     return (
       <li>
-        <ListItem button component={component} onClick={handleDrawerClose} {...href}>
+        <ListItem
+          button
+          component={component}
+          onClick={handleDrawerClose}
+          {...href}
+        >
           {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
           {primary ? <ListItemText primary={primary} /> : null}
         </ListItem>
       </li>
-    )
-  }
+    );
+  };
 
   const drawerContents = (
     <>
@@ -107,13 +113,19 @@ function NavBar(props) {
       <List>
         <ListItemLink to="/" primary="Home" />
         <ListItemLink to="/about" primary="About" />
+        <ListItemLink to="/blog" primary="Blog" />
         <ListItemLink to="/resume" primary="Resume" />
         <ListItemLink to="/particles" primary="Particles" />
       </List>
       <Divider />
 
       <List>
-        <ListItemLink to="https://github.com/aspenjames/aspenjames.github.io" icon={<GitHubIcon />} primary="Github" external="true" />
+        <ListItemLink
+          to="https://github.com/aspenjames/aspenjames.github.io"
+          icon={<GitHubIcon />}
+          primary="Github"
+          external="true"
+        />
       </List>
       <Divider />
 
@@ -121,7 +133,7 @@ function NavBar(props) {
         control={
           <Switch
             checked={isDarkMode}
-            color='secondary'
+            color="secondary"
             onChange={handleSwitchInput}
           />
         }
@@ -161,9 +173,11 @@ function NavBar(props) {
         classes={{
           paper: classes.drawerPaper,
         }}
-      >{drawerContents}</Drawer>
+      >
+        {drawerContents}
+      </Drawer>
     </>
-  )
+  );
 }
 
 export default NavBar;
